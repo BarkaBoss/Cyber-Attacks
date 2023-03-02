@@ -18,4 +18,4 @@ def home():
   cursor = mysql.connection.cursor()
   cursor.execute("Select * FROM attack_data_tbl")
   data = cursor.fetchall()
-  return str(data)
+  return render_template('index.html', attacks = data)

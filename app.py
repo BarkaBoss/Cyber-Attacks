@@ -70,7 +70,7 @@ def insert():
       WHERE id = %s
       """, (victim, location, industry, attacker_location, malware, motive, attack_type, sub_attack_type, date_of_attack, id_data))
       flash("Record Updated Successfully")
-      return redirect(url_for'Home')
+      return redirect(url_for('Home'))
 
 
 if __name__ == "__main__":

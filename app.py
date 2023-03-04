@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, flash
+from flask import Flask, render_template, request, url_for, flash, jsonify
 from werkzeug.utils import redirect
 from flask_mysqldb import MySQL
 from my_secrets import MySecrets
@@ -19,6 +19,13 @@ def home():
   cursor.execute("Select * FROM attack_all")
   data = cursor.fetchall()
   return render_template('index.html', attacks = data)
+
+@app.route('/api')
+def api():
+  cursor = mysql.connection.cursor()
+  cursor.execute("Select * FROM attack_all")
+  data = cursor.fetchall()
+  return jsonify(data)
 
 @app.route("/insert", methods=['POST'])
 def insert():

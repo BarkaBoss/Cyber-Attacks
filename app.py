@@ -57,7 +57,7 @@ def delete(id_data):
   mysql.connection.commit()
   return redirect(url_for('Home'))  
   
-@app.route('/update', methods = ['POST', 'GET'])
+""" @app.route('/update', methods = ['POST', 'GET'])
 def update():
   if request.method == 'POST':
     id_data = request.form['id']
@@ -70,7 +70,7 @@ def update():
     motive = request.form['motive']
     attack_type = request.form['attack_type']
     sub_attack_type = request.form['sub_attack_type']
-    date_of_attack = request.form['date_of_attack']
+    date_of_attack = request.form['date_of_attack'] """
 
     cursor = mysql.connection.cursor()
     cursor.execute(""" UPDATE attacks_all SET victim = %s, location = %s, industry = %s, attacker_location = %s, malware = %s, motive = %s, attack_type = %s, sub_attack_type = %s, date_of_attack = %s

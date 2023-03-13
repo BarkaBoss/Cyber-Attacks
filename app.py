@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, url_for, flash, jsonify
 from werkzeug.utils import redirect
 from flask_mysqldb import MySQL
 from my_secrets import MySecrets
+import pickle
 
 app = Flask(__name__)
 app.secret_key = [MySecrets.key]
+model = pickle.load(open('model/cyber_model.pkl', 'rb'))
 
 app.config['MYSQL_HOST'] = MySecrets.host
 app.config['MYSQL_USER'] = MySecrets.user
@@ -33,7 +35,7 @@ def insert():
     flash("Data Inserted Successfully")
     #Form Fields
     victim = request.form['victim']
-    location = request.form['locaton']
+    location = request.form['location']
     industry = request.form['industry']
     attacker_location = request.form['attacker_location']
     malware = request.form['malware']
@@ -43,7 +45,7 @@ def insert():
     date_of_attack = request.form['date_of_attack']
 
     cursor = mysql.connection.cursor()
-    cursor.execute("""INSERT INTO attacks_all (victim, location, industry, attacker_location, malware, motive, attack_type, sub_attack_type, date_of_attack) 
+    cursor.execute("""INSERT INTO attack_all (victim, location, industry, attacker_location, malware, motive, attack_type, sub_attack_type, date_of_attack) 
     VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
     (victim, location, industry, attacker_location, malware, motive, attack_type, sub_attack_type, date_of_attack))
     mysql.connection.commit()
@@ -53,9 +55,31 @@ def insert():
 def delete(id_data):
   flash("Record deleted Successfully")
   cursor = mysql.connection.cursor()
-  cursor.execute("DELETE FROM attacks_all WHERE id=%s", (id_data,))
+  cursor.execute("DELETE FROM attack_all WHERE id=%s", (id_data,))
   mysql.connection.commit()
-  return redirect(url_for('Home'))  
+  return redirect(url_for('home'))  
+
+@app.route('/predict', methods=['POST'])
+def predict():
+  if request.method == 'POST':
+    motive = request.form['motive']
+    actor_location = request.form['actor_location']
+    actor = request.form['actor']
+    victim = request.form['victim']
+
+    result = model.predict([[motive, actor_location, actor, victim, 1, -1, 1, 1, 0]])
+    print(result[0])
+
+    if result[0] == 0:
+        print("Mixed")
+        flash("Mixed")
+    elif result[0] == 1:
+        print("Exploitative")
+        flash("Exploitative")
+    else:
+        print("Disruptive")
+        flash("Disruptive")
+
 
 if __name__ == "__main__":
   app.run(debug=True)

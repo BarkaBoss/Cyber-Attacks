@@ -23,7 +23,7 @@
 
             <!-- content goes here -->
             <div class="col-sm-8">
-          <h2 >Cyber Attacks<button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Add Attack</button></h2>
+          <h2 >Cyber Attacks<button class="btn btn-primary float-right" data-toggle="modal" data-target="#predictModal">Detect Attack</button><button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Add Attack</button></h2>
           {%with messages = get_flashed_messages()%}
           {%if messages%}
           {% for message in messages%}
@@ -106,9 +106,59 @@
               </div>
           </div>
       </div>
-
-  </div>
+    </div>
    <!-- End of Enter New Attack Modal -->
+       <!-- Predict Attack Modal -->
+       <div id="predictModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+   
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" style="align-content: center;">Please enter details of attack for prediction</h5>    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  
+  
+                <div class="modal-body">
+                    
+                    <form action="{{ url_for('predict')}}" method="POST">
+                        <div class="form-group">
+                          <label>Victim</label>
+                          <input type="text" name="victim" class="form-control" id="exampleFormControlInput1" placeholder="Enter Victim">
+                        </div>
+  
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" name="location" class="form-control" id="exampleFormControlInput1" placeholder="Enter Location">
+                        </div>
+  
+                        <div class="form-group">
+                            <label>Industry</label>
+                            <input name="industry" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Victim Industry">
+                        </div>
+  
+                        <div class="form-group">
+                          <label>Attacker Location</label>
+                          <input name="attacker_location" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Attacker Location">
+                        </div>
+  
+                        <div class="form-group">
+                          <label>Attacker Name (Malware name)</label>
+                          <input name="malware" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Attacker Name">
+                        </div>
+  
+                          <button type="submit" class="btn btn-primary mb-2">Save</button>
+                     
+                      </form>
+  
+  
+                </div>
+            </div>
+        </div>
+      </div>
+
    <table class="display" style="width:100%"" id="myTable">
     <thead>
       <tr>

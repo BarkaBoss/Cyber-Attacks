@@ -53,16 +53,17 @@ def insert():
 
 @app.route('/delete/<string:id_data>', methods = ['GET'])
 def delete(id_data):
-  flash("Record deleted Successfully")
   cursor = mysql.connection.cursor()
   cursor.execute("DELETE FROM attack_all WHERE id=%s", (id_data,))
   mysql.connection.commit()
+  flash("Record deleted Successfully")
   return redirect(url_for('home'))  
 
 @app.route('/predict', methods=['POST'])
 def predict():
   if request.method == 'POST':
     motive = request.form['motive']
+    print(motive)
     actor_location = request.form['actor_location']
     actor = request.form['actor']
     victim = request.form['victim']
@@ -71,14 +72,15 @@ def predict():
     print(result[0])
 
     if result[0] == 0:
-        print("Mixed")
-        flash("Mixed")
+      print("Mixed")
+      flash("Mixed")
     elif result[0] == 1:
         print("Exploitative")
         flash("Exploitative")
     else:
         print("Disruptive")
         flash("Disruptive")
+  return redirect(url_for("home"))
 
 
 if __name__ == "__main__":

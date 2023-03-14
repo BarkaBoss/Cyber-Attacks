@@ -75,11 +75,12 @@ def predict():
       print("Mixed")
       flash("Mixed")
     elif result[0] == 1:
-        print("Exploitative")
-        flash("Exploitative")
-    else:
         print("Disruptive")
         flash("Disruptive")
+    else:
+      print("Exploitative")
+      flash("Exploitative")
+      
   return redirect(url_for("home"))
 
 

@@ -23,7 +23,11 @@
 
             <!-- content goes here -->
             <div class="col-sm-8">
-          <h2 >Cyber Attacks<button class="btn btn-primary float-right" data-toggle="modal" data-target="#predictModal">Predict Attack</button><button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Add Attack</button></h2>
+          <h2 >Cyber Attacks
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#predictModal">Predict Attack</button>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#predictPhishModal">Predict Phishing attack</button>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Add Attack</button>
+          </h2>
           {%with messages = get_flashed_messages()%}
           {%if messages%}
           {% for message in messages%}
@@ -156,6 +160,107 @@
                             <option value="-1">Finance</option>
                             <option value="0">Other</option>
                           </select>
+                        </br>
+                          <button type="submit" class="btn btn-primary mb-2">Predict</button>
+                     
+                      </form>
+  
+  
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Predict Phishing Attack Modal -->
+      <div id="predictPhishModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+   
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" style="align-content: center;">Please enter details for Phishing prediction</h5>    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  
+  
+                <div class="modal-body">
+                    
+                    <form action="{{ url_for('predictPhish')}}" method="POST">
+                        
+                        <label for="sfh">Server Form Handler</label>
+                        </br>
+                          <select name="sfh" id="sfh">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="popUPWindow">Are there pop windows?</label>
+                        </br>
+                          <select name="popUPWindow" id="popUPWindow">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="SSL_final_state">Does the website have HTTPS (SSL certificate)?</label>
+                        </br>
+                          <select name="SSL_final_state" id="SSL_final_state">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="Request_url">Are there requests from external websites?</label>
+                        </br>
+                          <select name="Request_url" id="Request_url">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="url_of_anchor">Is there "@" in the URL?</label>
+                        </br>
+                          <select name="url_of_anchor" id="url_of_anchor">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="web_traffic">Is there high web traffic?</label>
+                        </br>
+                          <select name="web_traffic" id="web_traffic">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="url_length">Is the URL very long?</label>
+                        </br>
+                          <select name="url_length" id="url_length">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="age_of_domain">Is it a new domain?</label>
+                        </br>
+                          <select name="age_of_domain" id="age_of_domain">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        <label for="having_ip">Is the IP address in the URL?</label>
+                        </br>
+                          <select name="having_ip" id="having_ip">
+                            <option value="-1">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">Don't Know</option>
+                          </select>
+                        </br>
+                        
                         </br>
                           <button type="submit" class="btn btn-primary mb-2">Predict</button>
                      

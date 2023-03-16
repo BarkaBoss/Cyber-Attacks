@@ -7,6 +7,7 @@ import pickle
 app = Flask(__name__)
 app.secret_key = [MySecrets.key]
 model = pickle.load(open('model/cyber_model.pkl', 'rb'))
+phish_model = pickle.load(open('model/phish_model.pkl', 'rb'))
 
 app.config['MYSQL_HOST'] = MySecrets.host
 app.config['MYSQL_USER'] = MySecrets.user
@@ -79,14 +80,41 @@ def predict():
       print("Mixed")
       flash("Mixed")
     elif result[0] == 1:
-        print("Disruptive")
-        flash("Disruptive")
+        print("Exploitative")
+        flash("Exploitative")
     else:
-      print("Exploitative")
-      flash("Exploitative")
+      print("Disruptive")
+      flash("Disruptive")
 
   return redirect(url_for("home"))
 
+@app.route('/predictPhish', methods=['POST'])
+def predictPhish():
+  if request.method == 'POST':
+    sfh = request.form['sfh']
+    popUPWindow = request.form['popUPWindow']
+    SSL_final_state = request.form['SSL_final_state']
+    Request_url = request.form['Request_url']
+    url_of_anchor = request.form['url_of_anchor']
+    web_traffic = request.form['web_traffic']
+    url_length = request.form['url_length']
+    age_of_domain = request.form['age_of_domain']
+    having_ip = request.form['having_ip']
+
+    result = phish_model.predict([[sfh, popUPWindow, SSL_final_state, Request_url, url_of_anchor, web_traffic, url_length, age_of_domain, having_ip]])
+    print(result[0])
+
+    if result[0] == 0:
+      print("Unknown")
+      flash("Unknown")
+    elif result[0] == 1:
+        print("Safe")
+        flash("Safe")
+    else:
+      print("Malintent detected")
+      flash("Malintent detected")
+
+  return redirect(url_for("home"))
 
 if __name__ == "__main__":
   app.run(debug=True)

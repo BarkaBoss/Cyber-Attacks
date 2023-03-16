@@ -15,6 +15,10 @@ app.config['MYSQL_DB'] = MySecrets.db
 
 mysql = MySQL(app)
 
+@app.route('/graphs')
+def graphs():
+  return render_template('graphs.html')
+
 @app.route("/")
 def home():
   cursor = mysql.connection.cursor()
@@ -80,7 +84,7 @@ def predict():
     else:
       print("Exploitative")
       flash("Exploitative")
-      
+
   return redirect(url_for("home"))
 
 

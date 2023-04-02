@@ -105,14 +105,14 @@ def predictPhish():
     print(result[0])
 
     if result[0] == 0:
-      print("Unknown")
-      flash("Unknown")
+      print("Sorry we can't conclusively predict your attack type We need more info")
+      flash("Sorry we can't conclusively predict your attack type We need more info")
     elif result[0] == 1:
-        print("Safe")
-        flash("Safe")
+        print("Everything looks good based on the indicators you provided")
+        flash("Everything looks good based on the indicators you provided")
     else:
-      print("Malintent detected")
-      flash("Malintent detected")
+      print("Your indicators show this is a Social Engineering attack you can add it to our database as disruptive")
+      flash("Your indicators show this is a Social Engineering attack you can add it to our database as disruptive")
 
   return redirect(url_for("home"))
 

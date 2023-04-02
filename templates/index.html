@@ -26,7 +26,7 @@
           <h2 >Cyber Attacks
             <a class="btn btn-primary" href="{{ url_for('graphs') }}">U.S Healthcare attacks</a>
             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#predictModal">Predict Attack</button>
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#predictPhishModal">Predict Phishing attack</button>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#predictPhishModal">Predict SE Attack</button>
             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Add Attack</button>
           </h2>
           {%with messages = get_flashed_messages()%}
@@ -178,7 +178,7 @@
             <div class="modal-content">
    
                 <div class="modal-header">
-                    <h5 class="modal-title text-primary" style="align-content: center;">Please enter details for Phishing prediction</h5>    
+                    <h5 class="modal-title text-primary" style="align-content: center;">Please enter details for SE prediction</h5>    
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>

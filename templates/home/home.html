@@ -1,0 +1,16 @@
+{% extends 'home/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+<h2>Home Page</h2>
+<p>Welcome back, {{ username }}!</p>
+<div class="login">
+  {% include "includes/alert.html" %}
+  <h1>Enter Suspicious URL</h1>
+  <form action="{{ url_for('phish') }}" method="post">
+      <input type="text" name="url" placeholder="URL" id="url" required>
+      <input type="submit" value="Test URL">
+  </form>
+</div>
+{% endblock %}

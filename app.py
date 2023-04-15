@@ -60,9 +60,9 @@ def insert():
     mysql.connection.commit()
     return redirect(url_for("home"))
 
-def updateSecurityStatus(email):
+def updateSecurityStatus(email, token):
    cursor = mysql.connection.cursor()
-   sql = "UPDATE accounts SET status=1 WHERE email='%s'" %email
+   sql = "UPDATE accounts SET status=1 token=%s WHERE email='%s'" %token %email
    #val = (email)
    cursor.execute(sql)
    mysql.connection.commit()
@@ -272,7 +272,19 @@ def phish():
         else:
           print("Your indicators show this is a Social Engineering attack you can add it to our database as disruptive")
           flash("Your indicators show this is a Social Engineering attack you can add it to our database as disruptive", "danger")
-          updateSecurityStatus(session['email'])
+          
+          import random
+          import math
+
+          digits = [i for i in range(0, 10)]
+          token = ""
+          
+          for i in range(6):
+             index = math.floor(random.random() * 10)
+             token += str(digits[index])
+
+          print(token)
+          updateSecurityStatus(session['email'], token)
 
     return render_template('home/home.html', username=session['username'],title="Home")
  

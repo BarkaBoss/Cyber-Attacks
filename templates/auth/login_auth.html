@@ -3,18 +3,18 @@
 {% block content%}
 <div class="login">
     {% include "includes/alert.html" %}
-    <h1>Login</h1>
+    <h1>Verification Login</h1>
     <div class="links">
-        <a href="{{ url_for('login') }}" class="active">Login</a>
+        <a href="{{ url_for('login') }}" class="active">Back to Login</a>
         <a href="{{ url_for('register') }}">Register</a>
     </div>
-    <form action="{{ url_for('login') }}" method="post">
+    <form action="{{ url_for('log_in_auth') }}" method="post">
         <label for="username">
             <i class="fas fa-user"></i>
         </label>
         <input type="text" name="username" placeholder="Username" id="username" required>
         <label for="token">
-            <i class="fas fa-user"></i>
+            <i class="fas fa-key"></i>
         </label>
         <input type="text" name="token" placeholder="token" id="token" required>
         <label for="password">

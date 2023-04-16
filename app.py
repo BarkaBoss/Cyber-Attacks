@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, flash, jsonify, session
+from flask import Flask, render_template, request, url_for, flash, jsonify, session, Markup
 from werkzeug.utils import redirect
 from flask_mysqldb import MySQL
 from my_secrets import MySecrets
@@ -62,9 +62,9 @@ def insert():
 
 def updateSecurityStatus(email, token):
    cursor = mysql.connection.cursor()
-   sql = "UPDATE accounts SET status=1 token=%s WHERE email='%s'" %token %email
+   sql = "UPDATE accounts SET status=1, token=%s WHERE email=%s"
    #val = (email)
-   cursor.execute(sql)
+   cursor.execute(sql,(token, email))
    mysql.connection.commit()
 
 @app.route('/delete/<string:id_data>', methods = ['GET'])
@@ -150,7 +150,7 @@ def login():
             session['email'] = account['email']
 
             if account['status'] == 1:
-               flash("Account Suspended for suspicious activities, contact admin", "danger")
+               flash(Markup('Account Suspended for suspicious activities, <a href="../auth/login_auth">contact admin</a>'), "danger")
                return redirect(url_for('login'))
             else:
                return redirect(url_for('home_user'))
@@ -159,8 +159,46 @@ def login():
             flash("Incorrect username/password!", "danger")
     return render_template('auth/login.html',title="Login")
 
+@app.route('/auth/login', methods=['GET', 'POST'])
+def log_in_auth():
+# Output message if something goes wrong...
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'token' in request.form:
+        # Create variables for easy access
+        username = request.form['username']
+        password = request.form['password']
+        token = request.form['token']
+    
+        # Check if account exists using MySQL
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s AND token = %s', (username, password, token))
+        # Fetch one record and return result
+        account = cursor.fetchone()
+                # If account exists in accounts table in out database
+        if account:
+            # Create session data, we can access this data in other routes
+            session['loggedin'] = True
+            session['id'] = account['id']
+            session['username'] = account['username']
+            session['email'] = account['email']
 
+            if account['status'] == 1:
+               downGradeSecurityStatus(email=account['email'])
+            else:
+               return redirect(url_for('home_user'))
+        else:
+            # Account doesnt exist or username/password incorrect
+            flash("Incorrect username/password!", "danger")
+    return render_template('auth/login.html',title="Login")
 
+def downGradeSecurityStatus(email):
+   cursor = mysql.connection.cursor()
+   sql = "UPDATE accounts SET status=0 WHERE email='%s'" %email
+   cursor.execute(sql)
+   mysql.connection.commit()
+
+   flash("Threat level averted", "success")
+   return redirect(url_for('login'))
 # http://localhost:5000/pythinlogin/register 
 # This will be the registration page, we need to use both GET and POST requests
 @app.route('/pythonlogin/register', methods=['GET', 'POST'])
@@ -200,6 +238,10 @@ def register():
 
 # http://localhost:5000/pythinlogin/home 
 # This will be the home page, only accessible for loggedin users
+
+@app.route('/auth/login_auth')
+def auth_login():
+   return render_template('auth/login_auth.html')
 
 @app.route('/pythonlogin/home_user')
 def home_user():
@@ -285,6 +327,7 @@ def phish():
 
           print(token)
           updateSecurityStatus(session['email'], token)
+          return render_template('auth/login.html', title="Login")
 
     return render_template('home/home.html', username=session['username'],title="Home")
  

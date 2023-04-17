@@ -149,9 +149,11 @@ def login():
             session['username'] = account['username']
             session['email'] = account['email']
 
-            if account['status'] == 1:
+            if account['status'] == 1 and account['role'] != 0:
                flash(Markup('Account Suspended for suspicious activities, <a href="../auth/login_auth">contact admin</a>'), "danger")
                return redirect(url_for('login'))
+            elif account['role'] == 0:
+               return redirect(url_for('admin_user'))
             else:
                return redirect(url_for('home_user'))
         else:
@@ -242,6 +244,16 @@ def register():
 @app.route('/auth/login_auth')
 def auth_login():
    return render_template('auth/login_auth.html')
+
+@app.route('/pythonlogin/admin_user')
+def admin_user():
+   if 'loggedin' in session:
+      cursor = mysql.connection.cursor()
+      cursor.execute("SELECT * FROM accounts")
+      data = cursor.fetchall()
+      return render_template('home/admin_home.html', username=session['username'], title="Admin Home", users=data)
+   
+   return redirect(url_for('login'))
 
 @app.route('/pythonlogin/home_user')
 def home_user():

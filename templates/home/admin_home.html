@@ -5,12 +5,28 @@
 {% block content %}
 <h2>Home Page</h2>
 <p>Welcome back, {{ username }}!</p>
-<div class="login">
+<div>
   {% include "includes/alert.html" %}
-  <h1>Enter Suspicious URL</h1>
-  <form action="{{ url_for('phish') }}" method="post">
-      <input type="text" name="url" placeholder="URL" id="url" required>
-      <input type="submit" value="Test URL">
-  </form>
+  <h3>System Users</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Token</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{user.2}}</td>
+        <td>{{user.1}}</td>
+        <td>{{user.4}}</td>
+        <td>{{user.5}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

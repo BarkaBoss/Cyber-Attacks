@@ -34,9 +34,7 @@ CREATE TABLE `accounts` (
   `token` varchar(20) DEFAULT NULL,
   `role` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `accounts` WRITE;
+) ;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
 
 INSERT INTO `accounts` (`id`, `email`, `username`, `password`, `status`, `token`, `role`)

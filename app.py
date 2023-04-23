@@ -22,7 +22,10 @@ mysql = MySQL(app)
 
 @app.route('/graphs')
 def graphs():
-  return render_template('graphs.html')
+  cursor = mysql.connection.cursor()
+  cursor.execute("Select * FROM us_health_attacks")
+  data = cursor.fetchall()
+  return render_template('graphs.html', us_attack = data)
 
 @app.route("/")
 def home():

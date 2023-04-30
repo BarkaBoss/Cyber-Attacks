@@ -41,6 +41,13 @@ def api():
   data = cursor.fetchall()
   return jsonify(data)
 
+@app.route('/api_us')
+def api_us():
+  cursor = mysql.connection.cursor()
+  cursor.execute("Select * FROM us_health_attacks")
+  data = cursor.fetchall()
+  return jsonify(data)
+
 @app.route("/insert", methods=['POST'])
 def insert():
   if request.method == 'POST':

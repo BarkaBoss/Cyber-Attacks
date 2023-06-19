@@ -23,7 +23,7 @@ mysql = MySQL(app)
 @app.route('/graphs')
 def graphs():
   cursor = mysql.connection.cursor()
-  cursor.execute("Select * FROM us_health_attacks")
+  cursor.execute("Select * FROM us_db")
   data = cursor.fetchall()
   return render_template('graphs.html', us_attack = data)
 
@@ -44,7 +44,7 @@ def api():
 @app.route('/api_us')
 def api_us():
   cursor = mysql.connection.cursor()
-  cursor.execute("Select * FROM us_health_attacks")
+  cursor.execute("Select * FROM us_db")
   data = cursor.fetchall()
   return jsonify(data)
 

@@ -1,28 +1,3 @@
-# ************************************************************
-# Sequel Ace SQL dump
-# Version 20046
-#
-# https://sequel-ace.com/
-# https://github.com/Sequel-Ace/Sequel-Ace
-#
-# Host: localhost (MySQL 8.0.30)
-# Database: cyber_attacks
-# Generation Time: 2023-06-19 11:02:13 +0000
-# ************************************************************
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-SET NAMES utf8mb4;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE='NO_AUTO_VALUE_ON_ZERO', SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Dump of table us_db
-# ------------------------------------------------------------
-
 DROP TABLE IF EXISTS `us_db`;
 
 CREATE TABLE `us_db` (
@@ -32,10 +7,10 @@ CREATE TABLE `us_db` (
   `covered_entity` varchar(255) DEFAULT NULL,
   `individuals_affected` int DEFAULT NULL,
   `breach_submission_date` varchar(20) DEFAULT NULL,
-  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   `business_associate_present` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 LOCK TABLES `us_db` WRITE;
 /*!40000 ALTER TABLE `us_db` DISABLE KEYS */;

@@ -4578,15 +4578,3 @@ VALUES
 	(4553,'Alaska Department of Health and Social Services','AK','Healthcare Provider',501,'10/30/2009','Theft','No\r'),
 	(4554,'Mid America Kidney Stone Association, LLC','MO','Healthcare Provider',1000,'10/28/2009','Theft','No\r'),
 	(4555,'Brooke Army Medical Center','TX','Healthcare Provider',1000,'10/21/2009','Theft','No');
-
-/*!40000 ALTER TABLE `us_db` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

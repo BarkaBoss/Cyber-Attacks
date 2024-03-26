@@ -34,7 +34,7 @@ CREATE TABLE `accounts` (
   `token` varchar(20) DEFAULT NULL,
   `role` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -56,17 +56,17 @@ DROP TABLE IF EXISTS `attack_all`;
 
 CREATE TABLE `attack_all` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `date_of_attack` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `victim` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `industry` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `attacker_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `malware` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `motive` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `date_of_attack` varchar(10) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `location` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `victim` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `industry` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `attacker_location` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `malware` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
+  `motive` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
   `attack_type` varchar(255) DEFAULT NULL,
-  `sub_attack_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `sub_attack_type` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 LOCK TABLES `attack_all` WRITE;
 /*!40000 ALTER TABLE `attack_all` DISABLE KEYS */;
@@ -10536,7 +10536,7 @@ CREATE TABLE `attack_data_tbl` (
   `having_IP_Address` int DEFAULT NULL,
   `Result` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 LOCK TABLES `attack_data_tbl` WRITE;
 /*!40000 ALTER TABLE `attack_data_tbl` DISABLE KEYS */;
@@ -11913,10 +11913,10 @@ CREATE TABLE `us_db` (
   `covered_entity` varchar(255) DEFAULT NULL,
   `individuals_affected` int DEFAULT NULL,
   `breach_submission_date` varchar(20) DEFAULT NULL,
-  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `location` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL,
   `business_associate_present` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 LOCK TABLES `us_db` WRITE;
 /*!40000 ALTER TABLE `us_db` DISABLE KEYS */;
@@ -16500,13 +16500,13 @@ CREATE TABLE `us_health_attacks` (
   `state` varchar(10) DEFAULT NULL,
   `business_involved` varchar(255) DEFAULT NULL,
   `individuals_affected` int DEFAULT NULL,
-  `date_of_breach` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `date_of_breach` varchar(50) CHARACTER SET utf8mb4  DEFAULT NULL,
   `type_of_breach` varchar(100) DEFAULT NULL,
   `location_of_breached_info` varchar(255) DEFAULT NULL,
   `date_added_updated` varchar(10) DEFAULT NULL,
   `year` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 
 

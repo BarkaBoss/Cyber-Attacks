@@ -15,7 +15,6 @@ app.config['MYSQL_HOST'] = MySecrets.host
 app.config['MYSQL_USER'] = MySecrets.user
 app.config['MYSQL_PASSWORD'] = MySecrets.password
 app.config['MYSQL_DB'] = MySecrets.db
-app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
 
@@ -23,28 +22,28 @@ mysql = MySQL(app)
 
 @app.route('/graphs')
 def graphs():
-  cursor = mysql.connection.cursor()
+  cursor = mysql.connect.cursor()
   cursor.execute("Select * FROM us_db")
   data = cursor.fetchall()
   return render_template('graphs.html', us_attack = data)
 
 @app.route("/")
 def home():
-  cursor = mysql.connection.cursor()
+  cursor = mysql.connect.cursor()
   cursor.execute("Select * FROM attack_all")
   data = cursor.fetchall()
   return render_template('index.html', attacks = data)
 
 @app.route('/api')
 def api():
-  cursor = mysql.connection.cursor()
+  cursor = mysql.connect.cursor()
   cursor.execute("Select * FROM attack_all")
   data = cursor.fetchall()
   return jsonify(data)
 
 @app.route('/api_us')
 def api_us():
-  cursor = mysql.connection.cursor()
+  cursor = mysql.connect.cursor()
   cursor.execute("Select * FROM us_db")
   data = cursor.fetchall()
   return jsonify(data)
@@ -64,7 +63,7 @@ def insert():
     sub_attack_type = request.form['sub_attack_type']
     date_of_attack = request.form['date_of_attack']
 
-    cursor = mysql.connection.cursor()
+    cursor = mysql.connect.cursor()
     cursor.execute("""INSERT INTO attack_all (victim, location, industry, attacker_location, malware, motive, attack_type, sub_attack_type, date_of_attack) 
     VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
     (victim, location, industry, attacker_location, malware, motive, attack_type, sub_attack_type, date_of_attack))
@@ -72,7 +71,7 @@ def insert():
     return redirect(url_for("home"))
 
 def updateSecurityStatus(email, token):
-   cursor = mysql.connection.cursor()
+   cursor = mysql.connect.cursor()
    sql = "UPDATE accounts SET status=1, token=%s WHERE email=%s"
    #val = (email)
    cursor.execute(sql,(token, email))
@@ -80,7 +79,7 @@ def updateSecurityStatus(email, token):
 
 @app.route('/delete/<string:id_data>', methods = ['GET'])
 def delete(id_data):
-  cursor = mysql.connection.cursor()
+  cursor = mysql.connect.cursor()
   cursor.execute("DELETE FROM attack_all WHERE id=%s", (id_data,))
   mysql.connection.commit()
   flash("Record deleted Successfully")
@@ -148,7 +147,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         # Check if account exists using MySQL
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = mysql.connect.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password))
         # Fetch one record and return result
         account = cursor.fetchone()
@@ -183,7 +182,7 @@ def log_in_auth():
         token = request.form['token']
     
         # Check if account exists using MySQL
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = mysql.connect.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s AND token = %s', (username, password, token))
         # Fetch one record and return result
         account = cursor.fetchone()
@@ -205,7 +204,7 @@ def log_in_auth():
     return render_template('auth/login.html',title="Login")
 
 def downGradeSecurityStatus(email):
-   cursor = mysql.connection.cursor()
+   cursor = mysql.connect.cursor()
    sql = "UPDATE accounts SET status=0 WHERE email='%s'" %email
    cursor.execute(sql)
    mysql.connection.commit()
@@ -259,7 +258,7 @@ def auth_login():
 @app.route('/pythonlogin/admin_user')
 def admin_user():
    if 'loggedin' in session:
-      cursor = mysql.connection.cursor()
+      cursor = mysql.connect.cursor()
       cursor.execute("SELECT * FROM accounts")
       data = cursor.fetchall()
       return render_template('home/admin_home.html', username=session['username'], title="Admin Home", users=data)

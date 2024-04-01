@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for, flash, jsonify, sess
 from werkzeug.utils import redirect
 from flask_mysqldb import MySQL
 from my_secrets import MySecrets
+
+import mysql.connector
 import MySQLdb.cursors
 import re
 import pickle
@@ -204,10 +206,19 @@ def log_in_auth():
     return render_template('auth/login.html',title="Login")
 
 def downGradeSecurityStatus(email):
-   cursor = mysql.connect.cursor()
+   import mysql.connector as conn
+   mydb = conn.connect(
+      host=MySecrets.host,
+      user=MySecrets.user,
+      database=MySecrets.db,
+      password = MySecrets.password
+   )
+   cursor = mydb.cursor()
    sql = "UPDATE accounts SET status=0 WHERE email='%s'" %email
    cursor.execute(sql)
-   mysql.connection.commit()
+   mydb.commit()
+   #mysql.connect.commit()
+   #cursor.close()
 
    flash("Threat level averted", "success")
    return redirect(url_for('login'))
@@ -238,7 +249,7 @@ def register():
         else:
         # Account doesnt exists and the form data is valid, now insert new account into accounts table
             cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (email, username, password))
-            mysql.connection.commit()
+            mysql.connect.commit()
             flash("You have successfully registered!", "success")
             return redirect(url_for('login'))
 
